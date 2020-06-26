@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# lxc-lauch-vm 0.0.1
+# Author: Jonas Hendrikson (2020) jonas@hendrikson.se
+
+# Launch a lxd vm with specified name, disksize, cpu n, mem
+
+image="$1"
+name="$2"
+size="${3}GB"
+cpu="$4"
+mem="${5}MB"
+
+die() {
+	echo "Error: $*"
+	exit 1
+}
+
+if (( $# != 5 )) || [[ $1 == "--help" ]] || [[ $1 == "-h" ]]
+then
+	echo "Usage: lxc-lanch-vm <image> <vm-name> <disksize in GB> <cpu n> <memmory in MB>"
+	echo "  E.g: lxc-launch-vm ubuntu:lts vm1 25 2 2048"
+	exit 1
+fi
+
+lxc init "$image" "$name" --vm --profile=default --profile=vm || die "lxc init"
+
+lxc config device override "$name" root size="$size" || die "lxc config"
+
+lxc config set "$name" limits.cpu="$cpu" || die "lxc config limits.cpu"
+
+lxc config set "$name" limits.memory="$mem" || die "lxc config limits.memory"
+
+lxc start "$name" || die "lxc start"
+
+exit 0
+
