@@ -1,0 +1,6 @@
+# lxc-lauch-vm 0.0.1
+
+Author: Jonas Hendrikson (2020) jonas@hendrikson.se
+
+Launch a lxd vm with specified name, disksize, cpu n, mem
+
