@@ -12,7 +12,7 @@ cpu="$4"
 mem="${5}MB"
 
 die() {
-	echo "Error: $*"
+	echo "Error: $*" >&2
 	exit 1
 }
 
