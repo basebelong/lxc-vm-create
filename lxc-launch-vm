@@ -23,7 +23,7 @@ then
 	exit 1
 fi
 
-lxc init "$image" "$name" --vm --profile=default --profile=vm || die "lxc init"
+lxc init "$image" "$name" --vm --profile=local || die "lxc init"
 
 lxc config device override "$name" root size="$size" || die "lxc config"
 
